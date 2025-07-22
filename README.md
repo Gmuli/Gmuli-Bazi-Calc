@@ -15,7 +15,7 @@ All this calculates in UTC time, so if there is a few hour differences, check if
 The .txt times and dates are made with Skyfield using JPL ephemerides.
 
 ## Features
-- Converts Gregorian date/time into Chinese Four Pillars
+- Converts Gregorian date/time into Chinese Four Pillars(Solar Calendar)
 - Handles Heavenly Stems, Earthly Branches, and 60 Jiazi cycle
 - Pure JS, works in-browser
 - Switched dates depending on what is added
