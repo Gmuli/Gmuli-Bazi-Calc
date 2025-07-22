@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<head>
+<meta charset="UTF-8">
+<meta name="description" content="Five Arts Calculators,Liu Yao(Wen Wang Gua) and Bazi, currently.">
+<meta name="keywords" content="bazi, four pillars,liu yao,wen wang gua,wwg,i ching,yi jing,xkdg">
+ 
+<link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
+<title>Solar Calendar Calculator</title>
+<script src="solarterms1900to2050.js"></script>
+
+</head>
+
+<body>
+
+
+	<input type="date" id="mydate" onchange="datechanged()"  >
+	<input type="time" id="mytime" onchange="datechanged()"  >
+				
+<div id="here"></div>
+
+<script>  
+
+
+  function loadScript(src, callback) {
+    const script = document.createElement('script');
+    script.src = src;
+    script.onload = callback;
+    script.onerror = () => {
+      console.error('Failed to load script:', src);
+    };
+    document.head.appendChild(script);
+  }
+
+  const targetYear = 2013; // however you get it
+  var workingdates = datelist;
+  
+function checkyearrange(targetYear){
+	
+  if (targetYear < 1900 || targetYear > 2050) {
+    loadScript('solarterms0to2150.txt', () => {
+      // ✅ Script loaded, now bigdatelist is available
+  
+ 
+      workingdates = bigdatelist;
+    
+      return 1;
+  
+    });
+    return 0;
+  } 
+}
+function getinrange(number,range){
+
+      while (number > range){number = number - range}
+
+      while (number <= 0.0){number = number+range}            
+
+        return number;
+
+}
+
+
+
+
+const solartermlongitude = [0,322.5, 337.5, 352.5, 7.5, 22.5, 37.5, 52.5, 67.5, 82.5, 97.5, 112.5, 127.5, 142.5, 157.5, 172.5, 187.5, 202.5, 217.5, 232.5, 247.5, 262.5, 277.5, 292.5, 307.5]
+var hourstem=0,hourbranch=0,daystem=0,daybranch=0,monthstem=0,monthbranch=0,yearstem=0,yearbranch=0
+var voidbranch1=0;voidbranch2=0;
+var solarterm = 0; solarmonth = 0;
+var dateEntered, dateafteradjustment;
+
+var flow=1;
+var fullrange = 0;
+var firstsolarterm;
+var firstsolartermindex= 0;
+var firstsolarterm = 0;
+var previoussolarterm = 0; nextsolarterm = 0;
+
+	document.getElementById('mydate').valueAsDate = new Date();
+	document.getElementById('mytime').valueAsDate = new Date();
+function finddifference(StartDate,EndDate)
+{        
+let enddatetemp = new Date(EndDate);
+
+const oneDay = 24 * 60 * 60 * 1000; // hours*minutes*seconds*milliseconds
+enddatetemp.setHours(0, 0, 0); StartDate.setHours(0, 0, 0);
+const diffDays = Math.round(Math.abs((enddatetemp - StartDate) / oneDay));
+
+return diffDays
+					
+			
+} //Function FindDifference ends here
+
+function findSurroundingDates(dateArray, targetDate) {
+  const target = new Date(targetDate).getTime();
+
+  let low = 0;
+  let high = dateArray.length - 1;
+
+  // Edge cases
+  if (target < new Date(dateArray[0]).getTime()) {
+    return { beforeIndex: null, afterIndex: 0 };
+  }
+  if (target > new Date(dateArray[high]).getTime()) {
+    return { beforeIndex: high, afterIndex: null };
+  }
+
+  // Binary search
+  while (low <= high) {
+    const mid = Math.floor((low + high) / 2);
+    const midTime = new Date(dateArray[mid]).getTime();
+
+    if (midTime === target) {
+      return { beforeIndex: mid, afterIndex: mid }; // Exact match
+    } else if (midTime < target) {
+      low = mid + 1;
+    } else {
+      high = mid - 1;
+    }
+  }
+
+  // At this point, high < low. The target is between dateArray[high] and dateArray[low]
+  return { beforeIndex: high, afterIndex: low };
+}
+
+
+function datechanged(){
+	
+	
+	
+	
+if (flow ==true) {
+	
+	
+
+
+//Change this if needed:
+	dateEntered = document.getElementById('mydate').valueAsDate;
+	dateafteradjustment = dateEntered;
+	
+	
+	
+	var hours = document.getElementById('mytime').valueAsDate.getHours();
+		
+		if (dateafteradjustment.getFullYear()>0){
+		yearstem = getinrange(dateafteradjustment.getFullYear()%10-3,10)
+		yearbranch = getinrange(dateafteradjustment.getFullYear()%12-3,12)
+		}
+		if (typeof(bigdatelist) == "undefined"){
+		checkyearrange(dateafteradjustment.getFullYear());
+		}
+	
+	
+		const currentDate = new Date("2025-04-30T00:00:00Z"); 
+
+		var comparedate = new Date(); comparedate.setFullYear(1); comparedate.setDate(1);comparedate.setMonth(0); 
+		var datediff = finddifference(comparedate,dateafteradjustment);
+		//DayPillar Calculations Here
+					daystem = getinrange((datediff % 10) + 6,10);
+					daybranch = getinrange((datediff % 12) +4,12);		
+					
+		//Solar Term and Solar Month start both here
+		//If we have the position of the solar term should be this: (dateafteradjustment.getFullYear -1900+ 22) % 24;
+		
+		
+		firstsolartermindex = ((dateafteradjustment.getFullYear() -1900) * 24)+1;
+		
+		if (dateafteradjustment.getFullYear() < 1900 || dateafteradjustment.getFullYear() > 2050){
+		firstsolartermindex = (dateafteradjustment.getFullYear()) * 24;
+	}
+	
+		
+		firstsolartem = new Date(workingdates[firstsolartermindex] );
+		
+		let surroundingindex = findSurroundingDates(workingdates, dateEntered.toISOString() );
+		var previoussolartermindex = surroundingindex.beforeIndex;
+		var nextsolartermindex = surroundingindex.afterIndex;
+		
+
+
+		
+		solarterm = (previoussolartermindex + 22) % 24;
+	
+		solarmonth = Math.floor((solarterm - 1) / 2) + 1;
+		monthbranch = getinrange(solarmonth+2,12);	
+		
+		longitude_of_the_sun = solartermlongitude[solarterm];
+		
+		
+		//Exception for Year Start Here
+		if ((longitude_of_the_sun<=315) && (dateEntered.getMonth() < 2) )   { 
+		//basically if month is jan or feb and longitude is less then 315, as Yin month starts at 315
+		yearbranch = getinrange(yearbranch-1,12);
+		yearstem = getinrange(yearstem-1,10);
+		};
+		//Month Starts here
+		monthbranch = getinrange(solarmonth+2,12);	
+		monthstem = getinrange((((yearstem % 5) * 2 )+ solarmonth),10);
+		
+		daystoendofmonth = getinrange(30-(longitude_of_the_sun % 30 + 15),30);
+		
+		//Hour Start here
+
+		
+		hourbranch = getinrange(hours,23);
+		
+			if ((hourbranch % 2) == 0){	
+			hourbranch = getinrange((hourbranch - 1),23);
+			};
+			if (hourbranch  == 0) {
+				hourbranch = 1;
+				} else {	
+			hourbranch = getinrange(((hourbranch+3) / 2),12);
+			};
+		
+			hourstem = getinrange(hourbranch + (((daystem % 5) *2) -2 ),10);
+			
+			if ( dateafteradjustment.getHours()>=23){
+				hourstem = getinrange(13 + (((daystem % 5) *2) -2 ),10);
+				};
+		
+		
+		
+		
+		voidbranch1 = getinrange(11 - daystem + daybranch,12);
+		voidbranch2 = getinrange(12 - daystem + daybranch,12);
+		
+		
+		
+		var branchespinyin = ["", "Zi ", "Chou","Yin","Mao","Chen","Si ","Wu ","Wei","Shen","You","Xu ","Hai"];
+		var BranchesNamesshort = ["","Zi子","Chou丑" ,"Yin寅","Mao卯","Chen辰","Si巳","Wu午","Wei未","Shen申", "You酉", "Xu戌", "Hai亥"]
+		
+		var stemspinyin = ["", "Jia","Yi","Bing","Ding","Wu","Ji","Geng","Xin","Ren","Gui"];
+		var stems = ["", "甲","乙","丙","丁","戊","己","庚","辛","壬","癸"];
+		
+		here.innerHTML = `
+		<table>
+		<tr><td>Hour</td><td>Day</td><td>Month</td><td>Year</td></tr>
+		<tr><td>`+stemspinyin[hourstem]+stems[hourstem]+`</td><td>`+stemspinyin[daystem]+stems[daystem]+`</td><td>`+stemspinyin[monthstem]+stems[monthstem]+`</td><td>`+stemspinyin[yearstem]+stems[yearstem]+`</td></tr>
+		<tr><td>`+BranchesNamesshort[hourbranch]+`</td><td>`+BranchesNamesshort[daybranch]+`</td><td>`+BranchesNamesshort[monthbranch]+`</td><td>`+BranchesNamesshort[yearbranch]+`</td></tr></table>`
+	}//Closing Flow
+
+}//Closing Date Changed
+
+
+datechanged();
+
+</script>
+
+
+
+</body>
+</html>
