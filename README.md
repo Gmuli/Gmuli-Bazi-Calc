@@ -26,3 +26,5 @@ Clone the repo and open `bazidates.html` in your browser.
 
 ## License
 MIT 
+
+As there aren't many developments here planned, will archive the repository for now. Someday may unarchive again if there is more interest in the project. 
