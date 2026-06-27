@@ -30,3 +30,4 @@ MIT
 As there aren't many developments here planned, will archive the repository for now. Someday may unarchive again if there is more interest in the project. 
 
 27 June 2026 - As there was bug with loading old dates, its unarchived now.This was fixed, but more may come someday, better leave it open for now.
+27 June 2026(Update 2) - All files with the dates are merged in the main html file now. In todays devices and hardware 1MB is not that much, so no point doing all this to save so little resources. Its in release page as well, now. That fixes all bugs too, as they were related to the sequence of loading so big file and the code that followed. 
