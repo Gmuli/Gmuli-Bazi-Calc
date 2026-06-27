@@ -28,3 +28,5 @@ Clone the repo and open `bazidates.html` in your browser.
 MIT 
 
 As there aren't many developments here planned, will archive the repository for now. Someday may unarchive again if there is more interest in the project. 
+
+27 June 2026 - As there was bug with loading old dates, its unarchived now.This was fixed, but more may come someday, better leave it open for now.
