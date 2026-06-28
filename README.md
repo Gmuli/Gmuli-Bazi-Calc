@@ -12,7 +12,7 @@ So what exactly it is... Well, with skyfield we have made a list of all points w
 
 All this calculates in UTC time, so if there is a few hour differences, check if your timezone is added to it.
 
-The .txt times and dates are made with Skyfield using JPL ephemerides.
+The .txt times and dates are made with Skyfield using JPL ephemerides. This way of formatting the date will be using UTC everywhere(this is the time without timezones and daylight savings, Coordinated Universal Time). To change date just change the format of the date to local time.
 
 ## Features
 - Converts Gregorian date/time into Chinese Four Pillars(Solar Calendar)
