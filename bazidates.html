@@ -6,7 +6,7 @@
  
 <link rel="shortcut icon" href="favicon.ico" type="image/x-icon" />
 <title>Solar Calendar Calculator</title>
-<script src="solarterms1900to2050.js"></script>
+
 
 </head>
 
@@ -19,7 +19,7 @@
 <div id="here"></div>
 
 <script>  
-var bigdatelist=["","0001-01-04T15:36:47Z",
+var  workingdates =["","0001-01-04T15:36:47Z",
 "0001-01-19T11:34:42Z",
 "0001-02-03T10:13:40Z",
 "0001-02-18T11:41:34Z",
@@ -51599,8 +51599,6 @@ var bigdatelist=["","0001-01-04T15:36:47Z",
 
 
 
-      var  workingdates = bigdatelist;
-
 function getinrange(number,range){
 
       while (number > range){number = number - range}
@@ -51697,9 +51695,7 @@ if (flow ==true) {
 		yearstem = getinrange(dateafteradjustment.getFullYear()%10-3,10)
 		yearbranch = getinrange(dateafteradjustment.getFullYear()%12-3,12)
 		}
-		if (typeof(bigdatelist) == "undefined"){
-		checkyearrange(dateafteradjustment.getFullYear());
-		}
+
 	
 	
 		const currentDate = new Date("2025-04-30T00:00:00Z"); 
